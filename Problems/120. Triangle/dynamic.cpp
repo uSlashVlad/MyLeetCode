@@ -6,16 +6,15 @@ class Solution
 public:
     int minimumTotal(vector<vector<int>> &triangle)
     {
-        int path = 0;
-        for (auto level : triangle)
+        int level = triangle.size() - 2;
+        while (level >= 0)
         {
-            int m = INT32_MAX;
-            for (int num : level)
-                if (m > abs(num))
-                    m = num;
-            path += m;
+            for (int i = 0; i < triangle[level].size(); i++)
+                triangle[level][i] += min(triangle[level + 1][i],
+                                          triangle[level + 1][i + 1]);
+            level--;
         }
 
-        return path;
+        return triangle[0][0];
     }
 };
